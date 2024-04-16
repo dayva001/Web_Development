@@ -1,0 +1,58 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}
+                Main Page
+            {% endblock title %}
+        </title>
+        <link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <header id="header">
+                    <img src="{% static 'logo.jpg' %}" height="50"/>
+                    <span style="float: right;">
+                        {% if user.is_authenticated  %}
+                            {{ user.username }}
+                            <form method="post" action="{% url 'logout' %}?next=/">
+                                <button type="submit">Logout</button>
+                                {% csrf_token %}
+                            </form>
+                        {% else %}
+                            {% block login_check %}
+                                Have an account? <a href="{% url 'login' %}?next=/">Login</a>
+                            {% endblock login_check %}
+                        {% endif %}
+                    </span>
+                    <br>
+                    <img src="{% static 'banner.jpg' %}"  width="1250" height="125"/>
+            </header>
+
+            <aside id="leftsidebar">
+                <nav id="nav">
+                    <ul>
+                        {% block sidenav %}
+                            <li>Menu 1</li>
+                            <li>Menu 2</li>
+                        {% endblock sidenav %}
+                    </ul>
+                </nav>
+            </aside>
+
+            <section id="main">
+                {% block content %}
+                    <h1> This is our Book Exchange System</h1>
+                {% endblock content %}
+            </section>
+
+            <footer id="footer">
+                2024 Spring CS3337 Django Python Project
+            </footer>
+        </div>
+    </body>
+</html>
