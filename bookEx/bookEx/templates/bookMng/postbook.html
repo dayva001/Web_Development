@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block sidenav %}
+   {% for item in item_list %}
+     <li>
+       <a href="{{ item.link }}"> {{ item.item }} </a>
+     </li>
+   {% endfor %}
+{% endblock sidenav %}
+
+{% block content %}
+<h1> This is Post Book Page</h1>
+{% if submitted %}
+<p> Post Book Successfully!</p>
+{% else %}
+
+
+<form action="" enctype="multipart/form-data" method="post" novalidate>
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <input type="range" name="{{ form.rating.name }}" min="0" max="5" value="{{ form.rating.value }}">
+          <td colspan="2">
+              <input type="submit" value="Submit">
+              <input type="number" name="num" min="0" max="10">
+          </td>
+        </tr>
+    </table>
+    {% csrf_token %}
+</form>
+{% endif %}
+{% endblock content %}
