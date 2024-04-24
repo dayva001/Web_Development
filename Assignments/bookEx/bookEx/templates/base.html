@@ -10,49 +10,62 @@
                 Main Page
             {% endblock title %}
         </title>
-        <link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <div id="wrapper">
-            <header id="header">
-                    <img src="{% static 'logo.jpg' %}" height="50"/>
-                    <span style="float: right;">
-                        {% if user.is_authenticated  %}
-                            {{ user.username }}
-                            <form method="post" action="{% url 'logout' %}?next=/">
-                                <button type="submit">Logout</button>
-                                {% csrf_token %}
-                            </form>
-                        {% else %}
-                            {% block login_check %}
-                                Have an account? <a href="{% url 'login' %}?next=/">Login</a>
-                            {% endblock login_check %}
-                        {% endif %}
-                    </span>
-                    <br>
-                    <img src="{% static 'banner.jpg' %}"  width="1250" height="125"/>
+        <div class="container">
+            <header class="header">
+                <img src="{% static 'logo.jpg' %}" class="img-fluid" width="50" height="50"/>
+                <span class="float-right">
+                    {% if user.is_authenticated  %}
+                        {{ user.username }}
+                        <form method="post" action="{% url 'logout' %}?next=/">
+                            <button type="submit" class="btn btn-primary">Logout</button>
+                            {% csrf_token %}
+                        </form>
+                    {% else %}
+                        {% block login_check %}
+                            Have an account? <a href="{% url 'login' %}?next=/" class="btn btn-link">Login</a>
+                        {% endblock login_check %}
+                    {% endif %}
+                </span>
+                <br>
+                <img src="{% static 'banner.jpg' %}" class="img-fluid"/>
             </header>
-
-            <aside id="leftsidebar">
-                <nav id="nav">
-                    <ul>
-                        {% block sidenav %}
-                            <li>Menu 1</li>
-                            <li>Menu 2</li>
-                        {% endblock sidenav %}
-                    </ul>
-                </nav>
-            </aside>
-
-            <section id="main">
+                {% if user.is_authenticated  %}
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <a class="navbar-brand" href="/">
+                            <img src="{% static 'logo.jpg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                            Home
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                          <div class="navbar-nav">
+                            {% for items in item_list %}
+                                {% if items.item != "Home" %}
+                                    <a class="nav-item nav-link active" href="{{ items.link }}"> {{ items.item }}</a>
+                                {% endif %}
+                              {% endfor %}
+                          </div>
+                        </div>
+                      </nav>
+                {% endif%}
+            <section class="main">
                 {% block content %}
                     <h1> This is our Book Exchange System</h1>
                 {% endblock content %}
             </section>
 
-            <footer id="footer">
-                2024 Spring CS3337 Django Python Project
-            </footer>
+            <footer class="footer text-center fixed-bottom mt-auto py-3 bg-light">
+                <div class="container">
+                  <span class="text-body-secondary">2024 Spring CS3337 Django Python Project</span>
+                </div>
+              </footer>
         </div>
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </body>
 </html>

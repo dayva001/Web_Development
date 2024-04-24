@@ -6,12 +6,6 @@
 {% endblock title %}
 
 
-{% block sidenav %}
-    {% for item in item_list %}
-        <li> <a href="{{ item.link }}"> {{ item.item }} </a> </li>
-    {% endfor %}
-{% endblock sidenav %}
-
 {% block content %}
     <h1 align="center"> This is our Book Exchange System</h1>
     <table border="2" width = "400">

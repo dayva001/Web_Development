@@ -8,14 +8,6 @@
 {% block login_check %}
 {% endblock login_check %}
 
-{% block sidenav %}
-    {% if user.is_authenticated  %}
-        {% for item in item_list %}
-            <li> <a href="{{ item.link }}"> {{ item.item }} </a> </li>
-        {% endfor %}
-    {% endif%}
-{% endblock sidenav %}
-
 {% block content %}
     <h1>Home Page</h1>
 {% endblock content %}

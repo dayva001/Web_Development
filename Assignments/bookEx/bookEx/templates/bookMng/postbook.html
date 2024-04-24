@@ -4,12 +4,6 @@
     Post a Book
 {% endblock title %}
 
-{% block sidenav %}
-    {% for item in item_list %}
-        <li> <a href="{{ item.link }}"> {{ item.item }} </a> </li>
-    {% endfor %}
-{% endblock sidenav %}
-
 {% block content %}
     <h1> This is Post Book Page</h1>
     {% if submitted %}

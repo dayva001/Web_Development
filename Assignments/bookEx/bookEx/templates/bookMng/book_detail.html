@@ -5,13 +5,6 @@
     {{book.name}} details
 {% endblock title %}
 
-
-{% block sidenav %}
-    {% for item in item_list %}
-        <li> <a href="{{ item.link }}"> {{ item.item }} </a> </li>
-    {% endfor %}
-{% endblock sidenav %}
-
 {% block content %}
     <h1 align="center"> {{ book.name }} Detail</h1>
     <p align="center">
