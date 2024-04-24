@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-^be)d89)pak7fy0kgm2*y)h*^ae63w4bp@ud2em2xjb(8fl&3^"
+SECRET_KEY = "django-insecure-zrge38w5d(c^d*!r6!^j_q%w_r^=i4gv#t77qnk6qhnzpb(c_l"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -125,3 +125,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'bookEx/static')
 ]
+
+
+

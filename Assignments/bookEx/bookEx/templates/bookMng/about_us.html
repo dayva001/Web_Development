@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block sidenav %}
+    {% for item in item_list %}
+    <li>
+        <a href="{{ item.link }}"> {{ item.item }} </a>
+    </li>
+    {% endfor %}
+{% endblock sidenav %}
+
+{% block content %}
+    <h1>About Us</h1>
+    <p>
+        Welcome to the Book Exchange System. This page is dedicated to providing
+        more information about our team and mission
+    </p>
+    <p>
+        Our goal is to make books accessible to everyone, everywhere. We are working
+        towards expanding our platform to include more educational resources.
+    </p>
+    <h1>Meet Our Team:</h1>
+    <div class="team-member">
+
+        <h3> <img src="static/pfp.jpg" alt="Cesar Almendarez" width="50px">
+            Cesar Almendarez
+        </h3>
+        <p>
+            I worked on...
+        </p>
+
+        <h3 align="right"> <img src="static/pfp2.jpg" alt="Darius Ayvazian" width="50px">
+            Darius Ayvazian
+        </h3>
+        <p align="right">
+            I worked on...
+        </p>
+
+        <h3> <img src="static/pfp3.jpg" alt="Christian Chun" width="50px">
+            Christian Chun
+        </h3>
+        <p>
+            I worked on...
+        </p>
+
+        <h3 align="right"> <img src="static/pfp4.jpg" alt="Anthony Diaz" width="50px">
+            Anthony Diaz
+        </h3>
+        <p align="right">
+            I worked on...
+        </p>
+
+        <h3> <img src="static/pfp5.jpg" alt="Keven Ortez" width="50px">
+            Kevin Ortez
+        </h3>
+        <p>
+            I worked on...
+        </p>
+
+        <h3 align="right"> <img src="static/pfp6.jpg" alt="Kenny Zhang" width="50px">
+            Kenny Zhang
+        </h3>
+        <p align="right">
+            I worked on...
+        </p>
+    </div>
+
+    <h2>Contact Us</h2>
+    <p>
+        For more information or to get involved, email us at <a href="#">email@bookex.com</a>
+    </p>
+{% endblock content %}
