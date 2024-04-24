@@ -1,2 +1,2 @@
 # Web_Development
-Django web development
+Christian Chun - About Us section
