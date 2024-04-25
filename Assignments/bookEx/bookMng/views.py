@@ -100,6 +100,19 @@ def book_delete(request, book_id):
                   }
                   )
 
+def search(request):
+        name=request.GET.get('search')
+        books = Book.objects.filter(name__icontains=name)
+        for b in books:
+            b.pic_path = b.picture.url[14:]
+        return render(request,
+                      'bookMng/displaybooks.html',
+                      {
+                          'item_list': MainMenu.objects.all(),
+                          'book_list': books,
+                      }
+                      )
+
 class Register(CreateView):
     template_name = 'registration/register.html'
     form_class = UserCreationForm
