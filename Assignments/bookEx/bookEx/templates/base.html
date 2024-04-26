@@ -1,57 +1,77 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>
-        {% block title %}
-            My Title
-        {% endblock title %}
-    </title>
-    <link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}
+                Main Page
+            {% endblock title %}
+        </title>
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'main.css' %}">
+    </head>
+    <body>
+        <div class="container flex-grow-1">
+            <header class="header">
+                <img src="{% static 'logo.jpg' %}" class="img-fluid" width="50" height="50"/>
+                <span class="float-right">
+                    {% if user.is_authenticated  %}
+                        {{ user.username }}
+                        <form method="post" action="{% url 'logout' %}?next=/">
+                            <button type="submit" class="btn btn-primary">Logout</button>
+                            {% csrf_token %}
+                        </form>
+                    {% else %}
+                        {% block login_check %}
+                            Have an account? <a href="{% url 'login' %}?next=/" class="btn btn-link">Login</a>
+                        {% endblock login_check %}
+                    {% endif %}
+                </span>
+                <br>
+                <img src="{% static 'banner.jpg' %}" class="img-fluid"/>
+            </header>
+                {% if user.is_authenticated  %}
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <a class="navbar-brand" href="/">
+                            <img src="{% static 'logo.jpg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                                Home
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navText" aria-controls="navText" aria-expanded="false" aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navText">
+                            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                                {% for items in item_list %}
+                                    {% if items.item != "Home" %}
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="{{ items.link }}"> {{ items.item }}</a>
+                                    </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                            <form class="form-inline">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" formaction="{% url 'search' %}">Search</button>
+                            </form>
+                        </div>
+                    </nav>
+                {% endif%}
+            <section class="main">
+                {% block content %}
+                    <h1> This is our Book Exchange System</h1>
+                {% endblock content %}
+            </section>
 
-</head>
-<body>
-<div id="wrapper">
-    <header id="header">
-        <img src="{% static 'logo.jpg' %}" height="50"/>
-        <span style="float: right;">
-            {% if user.is_authenticated %}
-                {{ user.username }}
-                <!--<a href="{% url 'logout' %}?next=/">Logout</a>-->
-                <form method="post" action="{% url 'logout' %}?next=/">
-                    {% csrf_token %}
-                <button type="submit">Logout</button>
-                </form>
-            {% else %}
-                Not Logged In.
-                <a href="{% url 'login' %}?next=/home">Login</a>
-            {% endif %}
-        </span>
+        </div>
+        <footer class="footer text-center bg-light" id="my-footer">
+            <span class="text-body-secondary">2024 Spring CS3337 Django Python Project</span> <br>
+            <a href="/aboutus">About Us</a>
+        </footer>
 
-        <img src="{% static 'banner.jpg' %}" width="900" height="100"/>
-    </header>
-    <aside id="leftsidebar">
-        <nav id="nav">
-            <ul>
-                {% block sidenav %}
-                    <li>Menu 1</li>
-                    <li>Menu 2</li>
-                {% endblock sidenav %}
-            </ul>
-        </nav>
-    </aside>
-
-    <section id="main">
-        {% block content %}
-            <h1> This is out Book Exchange System</h1>
-        {% endblock content %}
-    </section>
-
-    <footer id="footer">
-        2024 Spring CS3337 Django Python Project
-    </footer>
-</div>
-</body>
+        <!-- scripts -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </body>
 </html>

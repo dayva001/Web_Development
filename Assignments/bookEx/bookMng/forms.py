@@ -12,3 +12,4 @@ class BookForm(ModelForm):
             'price',
             'picture',
         ]
+

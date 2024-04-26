@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ("name", models.CharField(max_length=200)),
                 ("web", models.URLField(max_length=300)),
                 ("price", models.DecimalField(decimal_places=2, max_digits=8)),
-                ("publishedate", models.DateField(auto_now=True)),
+                ("publishdate", models.DateField(auto_now=True)),
                 ("picture", models.FileField(upload_to="bookEx/static/uploads")),
                 (
                     "pic_path",
