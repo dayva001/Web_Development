@@ -26,6 +26,13 @@ def home(request):
                   }
                   )
 
+def aboutus(request):
+    return render(request,
+                  'bookMng/about_us.html',
+                  {
+                      'item_list': MainMenu.objects.all()
+                  }
+                  )
 
 def displaybooks(request):
     books = Book.objects.all()
