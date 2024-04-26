@@ -23,11 +23,13 @@
                     <img src="{% static book.pic_path %}" height="50">
                 </td>
                 <td align="center">
-                    <a href="book_delete/{{ book.id }}">
-                        <img src="{% static 'red_x.png' %}" height="12">delete
+                    <a class = "btn btn-large btn-danger " data-toggle="confirmation" href="book_delete/{{ book.id }}" data-title="Delete book?" data-placement="right" data-singleton="true" data-popout="true">
+                        <img src="{% static 'red_x.png' %}" height="12"> Delete
                     </a>
                 </td>
             </tr>
         {% endfor %}
     </table>
 {% endblock content %}
+
+

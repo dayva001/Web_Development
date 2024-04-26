@@ -98,12 +98,16 @@ def mybooks(request):
 
 def book_delete(request, book_id):
     book = Book.objects.get(id=book_id)
-    book.delete
+    book.delete()
+    books = Book.objects.filter(username=request.user)
+    for b in books:
+        b.pic_path = b.picture.url[14:]
     return render(request,
                   'bookMng/mybooks.html',
                   {
                       'item_list': MainMenu.objects.all(),
                       'book': book,
+                      'book_list': books,
                   }
                   )
 
