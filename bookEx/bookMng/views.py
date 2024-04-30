@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 
 # Create your views here.
 from bookMng.models import MainMenu
+from . import forms
 
 
 def index(request):
@@ -42,8 +43,10 @@ def postbook(request):
 
 from bookMng.models import Book
 
+
 def displaybooks(request):
     books = Book.objects.all()
+
     for b in books:
         b.pic_path = b.picture.url[14:]
     return render(request,
@@ -51,8 +54,9 @@ def displaybooks(request):
                   {
                       'item_list': MainMenu.objects.all(),
                       'books': books
-                  }
+                  },
                   )
+
 
 
 class Register(CreateView):

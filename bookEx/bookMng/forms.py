@@ -1,4 +1,4 @@
-#from django import forms
+from django import forms
 from django.forms import ModelForm
 from .models import Book
 
@@ -12,5 +12,7 @@ class BookForm(ModelForm):
             'price',
             'picture',
             'rating',
-            'comments'
+            'comments',
         ]
+
+

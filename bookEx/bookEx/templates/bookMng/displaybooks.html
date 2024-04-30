@@ -22,6 +22,9 @@
             <th>
                 Publish Date
             </th>
+            <th>
+                Rating
+            </th>
 
         </tr>
        {% for book in books %}
@@ -35,7 +38,11 @@
             <td>
                 <img src="{% static book.pic_path %}" height="50"/>
             </td>
+            <td>
+                {{ book.rating }}
+            </td>
         </tr>
        {% endfor %}
    </table>
+
 {% endblock content %}

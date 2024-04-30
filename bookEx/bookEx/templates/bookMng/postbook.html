@@ -19,14 +19,18 @@
     <table>
         {{ form.as_table }}
         <tr>
-            <input type="range" name="{{ form.rating.name }}" min="0" max="5" value="{{ form.rating.value }}">
+            <label for="rating">Rating</label>
+            <input type="range" id="rating" name="{{ form.rating.name }}" min="0" max="5"
+                   value="{{ form.rating.value }}" step="0.1" oninput="rangeValue.innerText = this.value">
+            <p id="rangeValue">2.5</p>
+
           <td colspan="2">
               <input type="submit" value="Submit">
-              <input type="number" name="num" min="0" max="10">
           </td>
         </tr>
     </table>
     {% csrf_token %}
 </form>
 {% endif %}
+
 {% endblock content %}
