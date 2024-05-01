@@ -5,7 +5,7 @@ from django.views.generic import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from bookMng.models import MainMenu, Book
-from .forms import BookForm
+from .forms import BookForm, RateBook
 
 # Create your views here.
 
@@ -96,6 +96,7 @@ def mybooks(request):
                   }
                   )
 
+
 def book_delete(request, book_id):
     book = Book.objects.get(id=book_id)
     book.delete()
@@ -111,6 +112,7 @@ def book_delete(request, book_id):
                   }
                   )
 
+
 def search(request):
         name=request.GET.get('search')
         books = Book.objects.filter(name__icontains=name)
@@ -123,6 +125,29 @@ def search(request):
                           'book_list': books,
                       }
                       )
+
+
+def ratebook(request):
+    if request.method == 'POST':
+        form = RateBook(request.POST)
+        if form.is_valid():
+            rate = form.save(commit=False)
+            try:
+                rate.username = request.user
+            except Exception:
+                pass
+            rate.save()
+            return HttpResponseRedirect('/ratebook')
+    else:
+        form = RateBook()
+    return render(request,
+                  'bookMng/ratebook.html',
+                  {
+                      'form': form,
+                      'item_list': MainMenu.objects.all(),
+                  }
+                  )
+
 
 class Register(CreateView):
     template_name = 'registration/register.html'

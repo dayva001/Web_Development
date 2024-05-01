@@ -25,10 +25,10 @@ class Book(models.Model):
         return str(self.id)
 
 
-class BookRatings(models.Model):
-    book = models.ForeignKey(Book, blank=False, null=False, on_delete=models.CASCADE)
-    rating = models.IntegerField(default=0)
-    username = models.ForeignKey(User, blank=False, null=False, on_delete=models.CASCADE)
+class BookRating(models.Model):
+    book_id = models.ForeignKey(Book, blank=False, null=False, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0, validators=[MaxValueValidator(5), MinValueValidator(0)])
+    user_id = models.ForeignKey(User, blank=False, null=False, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id)

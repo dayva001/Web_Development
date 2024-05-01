@@ -22,6 +22,12 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-confirmation2/dist/bootstrap-confirmation.min.js"></script>
     </head>
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
+
     <body>
         <div class="w-auto h-100 container-fluid p-0">
             <header class="header">
@@ -86,55 +92,6 @@
             rootSelector: '[data-toggle=confirmation]',
              // other options
             });
-        </script>
-        <script>
-            const sOne = document.getElementById('1 star')
-            const sTwo = document.getElementById('2 stars')
-            const sThree = document.getElementById('3 stars')
-            const sFour = document.getElementById('4 stars')
-            const sFive = document.getElementById('5 stars')
-            const arr = [sOne, sTwo, sThree, sFour, sFive]
-
-            const colorStars = (size) => {
-                const children = form.children
-                for (let i=0; i < children.length; i++)
-                {
-                    if(i<=size)
-                    {
-                        children[i].classList.add('checked')
-                    }
-                    else
-                    {
-                        children[i].classList.remove('checked')
-                    }
-                }
-            }
-
-            cost handleStars = (selection) => {
-                switch(selection){
-                    case '1 star': {
-                        colorStars(1)
-                        return
-                    }
-                    case '2 stars': {
-                        colorStars(2)
-                        return
-                    }
-                    case '3 stars': {
-                        colorStars(3)
-                        return
-                    }
-                    case '4 stars': {
-                        colorStars(4)
-                        return
-                    }
-                    case '5 stars': {
-                        colorStars(5)
-                        return
-                    }
-                }
-
-            }
         </script>
     </body>
 </html>

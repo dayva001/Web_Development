@@ -23,11 +23,16 @@
                 </td>
                 <td> <img src="{% static book.pic_path %}" height="50"> </td>
                 <td>
-                    <a></a><span class="fa fa-star checked" id="1 star"></span>
-                    <span class="fa fa-star checked" id="2 stars"></span>
-                    <span class="fa fa-star checked" id="3 stars"></span>
-                    <span class="fa fa-star" id="4 stars"></span>
-                    <span class="fa fa-star" id="5 stars"></span>
+                    <form class ='rate-form' action="ratebook" method="post">
+                        <input type="hidden" name="book_id" value="{{ book.id }}">
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <button type="submit" name="rating" value="1" class="fa fa-star checked invisible_button" id="1 star"></button>
+                        <button type="submit" name="rating" value="2" class="fa fa-star checked invisible_button" id="2 stars"></button>
+                        <button type="submit" name="rating" value="3" class="fa fa-star checked invisible_button" id="3 stars"></button>
+                        <button type="submit" name="rating" value="4" class="fa fa-star invisible_button" id="4 stars"></button>
+                        <button type="submit" name="rating" value="5" class="fa fa-star invisible_button" id="5 stars"></button>
+                        {% csrf_token %}
+                    </form>
                 </td>
             </tr>
         {% endfor %}
