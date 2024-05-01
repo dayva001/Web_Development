@@ -20,6 +20,15 @@ class Book(models.Model):
     picture = models.FileField(upload_to='bookEx/static/uploads')
     pic_path = models.CharField(max_length=300, editable=False, blank=True)
     username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
-    ratings_sync = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class BookRatings(models.Model):
+    book = models.ForeignKey(Book, blank=False, null=False, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0)
+    username = models.ForeignKey(User, blank=False, null=False, on_delete=models.CASCADE)
+
     def __str__(self):
         return str(self.id)
