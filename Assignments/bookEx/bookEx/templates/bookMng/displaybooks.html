@@ -12,6 +12,7 @@
         <tr>
             <th>Book Name</th>
             <th>Cover</th>
+            <th>Rating</th>
         </tr>
         {% for book in book_list %}
             <tr>
@@ -21,7 +22,13 @@
                     </a>
                 </td>
                 <td> <img src="{% static book.pic_path %}" height="50"> </td>
-
+                <td>
+                    <a></a><span class="fa fa-star checked" id="1 star"></span>
+                    <span class="fa fa-star checked" id="2 stars"></span>
+                    <span class="fa fa-star checked" id="3 stars"></span>
+                    <span class="fa fa-star" id="4 stars"></span>
+                    <span class="fa fa-star" id="5 stars"></span>
+                </td>
             </tr>
         {% endfor %}
     </table>

@@ -14,6 +14,8 @@
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
         <!-- CSS style page-->
         <link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
+        <!-- Add icon library -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- Scripts -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
@@ -84,6 +86,55 @@
             rootSelector: '[data-toggle=confirmation]',
              // other options
             });
+        </script>
+        <script>
+            const sOne = document.getElementById('1 star')
+            const sTwo = document.getElementById('2 stars')
+            const sThree = document.getElementById('3 stars')
+            const sFour = document.getElementById('4 stars')
+            const sFive = document.getElementById('5 stars')
+            const arr = [sOne, sTwo, sThree, sFour, sFive]
+
+            const colorStars = (size) => {
+                const children = form.children
+                for (let i=0; i < children.length; i++)
+                {
+                    if(i<=size)
+                    {
+                        children[i].classList.add('checked')
+                    }
+                    else
+                    {
+                        children[i].classList.remove('checked')
+                    }
+                }
+            }
+
+            cost handleStars = (selection) => {
+                switch(selection){
+                    case '1 star': {
+                        colorStars(1)
+                        return
+                    }
+                    case '2 stars': {
+                        colorStars(2)
+                        return
+                    }
+                    case '3 stars': {
+                        colorStars(3)
+                        return
+                    }
+                    case '4 stars': {
+                        colorStars(4)
+                        return
+                    }
+                    case '5 stars': {
+                        colorStars(5)
+                        return
+                    }
+                }
+
+            }
         </script>
     </body>
 </html>
