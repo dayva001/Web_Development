@@ -90,7 +90,10 @@ def book_detail(request, book_id):
     for r in ratings:
         rating_list[r.rating - 1] = rating_list[r.rating - 1] + 1
     for x in range(0, 5):
-        rating_list_percent[x] = (rating_list[x]/num_ratings)*100
+        if num_ratings == 0:
+            rating_list_percent[x] = 0
+        else:
+            rating_list_percent[x] = (rating_list[x]/num_ratings)*100
     return render(request,
                   'bookMng/book_detail.html',
                   {

@@ -24,6 +24,9 @@
                 <td> <img src="{% static book.0.pic_path %}" height="200"> </td>
                 <td class="p-1">
                     <form class ='rate-form {% if book.1 <= 2.0 %} text-muted {% endif %} {% if book.1 >= 4.0 %} font-weight-bold {% endif %}' action="ratebook" method="post">
+                        {% if book.1 is null %}
+                            <p>No Reviews Yet <b>(Be the First)</b>.</p>
+                        {% endif %}
                         <input type="hidden" name="book_id" value="{{ book.0.id }}">
                         <input type="hidden" name="user_id" value="{{ user.id }}">
                         <button type="submit" name="rating" value="1" class="fa fa-star {% if book.1 >= 1 %}checked{% endif %} invisible_button" id="1 star"></button>
@@ -31,7 +34,9 @@
                         <button type="submit" name="rating" value="3" class="fa fa-star {% if book.1 >= 3 %}checked{% endif %} invisible_button" id="3 stars"></button>
                         <button type="submit" name="rating" value="4" class="fa fa-star {% if book.1 >= 4 %}checked{% endif %} invisible_button" id="4 stars"></button>
                         <button type="submit" name="rating" value="5" class="fa fa-star {% if book.1 >= 5 %}checked{% endif %} invisible_button" id="5 stars"></button>
-                        {{ book.1 }}
+                        {% if book.1 is not null %}
+                            {{ book.1 }}
+                        {% endif %}
                         {% csrf_token %}
                     </form>
                 </td>
