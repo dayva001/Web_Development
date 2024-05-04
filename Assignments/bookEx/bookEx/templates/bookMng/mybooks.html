@@ -7,7 +7,7 @@
 
 {% block content %}
     <h1 align="center"> Books Published</h1>
-    <table border="2" width = "400">
+    <table class="text-nowrap" border="2" width = "400">
         <tr>
             <th>Book Name</th>
             <th>Cover</th>
@@ -20,7 +20,7 @@
                     </a>
                 </td>
                 <td>
-                    <img src="{% static book.pic_path %}" height="50">
+                    <img src="{% static book.pic_path %}" height="200">
                 </td>
                 <td align="center">
                     <a class = "btn btn-large btn-danger " data-toggle="confirmation" href="book_delete/{{ book.id }}" data-title="Delete book?" data-placement="right" data-singleton="true" data-popout="true">

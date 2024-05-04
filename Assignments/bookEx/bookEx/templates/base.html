@@ -31,7 +31,6 @@
     <body>
         <div class="w-auto h-100 container-fluid p-0">
             <header class="header">
-                <img src="{% static 'logo.jpg' %}" class="img-fluid" width="50" height="50"/>
                 <span class="float-right p-2">
                     {% if user.is_authenticated  %}
                         {{ user.username }}

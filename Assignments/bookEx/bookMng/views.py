@@ -1,10 +1,11 @@
+from django.db.models import Avg
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views.generic import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
-from bookMng.models import MainMenu, Book
+from bookMng.models import MainMenu, Book, BookRating
 from .forms import BookForm, RateBook
 
 # Create your views here.
@@ -34,15 +35,20 @@ def aboutus(request):
                   }
                   )
 
+
 def displaybooks(request):
     books = Book.objects.all()
-    for b in books:
-        b.pic_path = b.picture.url[14:]
+    book_ratings = []
+    for book in books:
+        book.pic_path = book.picture.url[14:]
+        ratings = BookRating.objects.filter(book_id=book.id)
+        avg_rating = ratings.aggregate(Avg('rating'))['rating__avg']
+        book_ratings.append((book, avg_rating))
     return render(request,
                   'bookMng/displaybooks.html',
                   {
                       'item_list': MainMenu.objects.all(),
-                      'book_list': books,
+                      'book_list': book_ratings,
                   }
                   )
 
@@ -76,11 +82,24 @@ def postbook(request):
 def book_detail(request, book_id):
     book = Book.objects.get(id=book_id)
     book.pic_path = book.picture.url[14:]
+    ratings = BookRating.objects.filter(book_id=book_id)
+    num_ratings = BookRating.objects.filter(book_id=book_id).count()
+    avg_rating = ratings.aggregate(Avg('rating'))['rating__avg']
+    rating_list = [0, 0, 0, 0, 0]
+    rating_list_percent = [0, 0, 0, 0, 0]
+    for r in ratings:
+        rating_list[r.rating - 1] = rating_list[r.rating - 1] + 1
+    for x in range(0, 5):
+        rating_list_percent[x] = (rating_list[x]/num_ratings)*100
     return render(request,
                   'bookMng/book_detail.html',
                   {
                       'item_list': MainMenu.objects.all(),
                       'book': book,
+                      'num_ratings': num_ratings,
+                      'avg_rating': avg_rating,
+                      'rating_list': rating_list,
+                      'rating_list_percent': rating_list_percent
                   }
                   )
 
@@ -128,23 +147,38 @@ def search(request):
 
 
 def ratebook(request):
+    books = Book.objects.all()
+    book_ratings = []
+    for book in books:
+        book.pic_path = book.picture.url[14:]
+        ratings = BookRating.objects.filter(book_id=book.id)
+        avg_rating = ratings.aggregate(Avg('rating'))['rating__avg']
+        book_ratings.append((book, avg_rating))
     if request.method == 'POST':
         form = RateBook(request.POST)
         if form.is_valid():
             rate = form.save(commit=False)
             try:
-                rate.username = request.user
+                rate.user_id = request.user
             except Exception:
                 pass
+            # Check if there is already a rating for the book by the user
+            existing_rating = BookRating.objects.filter(book_id=rate.book_id, user_id=rate.user_id).first()
+            if existing_rating:
+                # Update the existing rating
+                existing_rating.rating = rate.rating
+                existing_rating.save()
+                return HttpResponseRedirect('/displaybooks')
             rate.save()
-            return HttpResponseRedirect('/ratebook')
+            return HttpResponseRedirect('/displaybooks')
     else:
         form = RateBook()
     return render(request,
-                  'bookMng/ratebook.html',
+                  'bookMng/displaybooks.html',
                   {
                       'form': form,
                       'item_list': MainMenu.objects.all(),
+                      'book_list': book_ratings,
                   }
                   )
 

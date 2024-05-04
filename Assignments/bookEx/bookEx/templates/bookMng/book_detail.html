@@ -27,12 +27,12 @@
     </table>
     <div class="ratingbox">
         <span class="heading">User Rating</span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
-        <p>4.1 average based on 254 reviews.</p>
+        <span class="fa fa-star {% if avg_rating >= 1 %}checked{% endif %}"></span>
+        <span class="fa fa-star {% if avg_rating >= 2 %}checked{% endif %}"></span>
+        <span class="fa fa-star {% if avg_rating >= 3 %}checked{% endif %}"></span>
+        <span class="fa fa-star {% if avg_rating >= 4 %}checked{% endif %}"></span>
+        <span class="fa fa-star {% if avg_rating >= 5 %}checked{% endif %}"></span>
+        <p>{{ avg_rating }} average based on {{num_ratings}} reviews.</p>
         <hr style="border:3px solid #f1f1f1">
         <div class="row">
           <div class="side">
@@ -44,7 +44,7 @@
             </div>
           </div>
           <div class="side right">
-            <div>150</div>
+            <div>{{ rating_list.4 }}</div>
           </div>
           <div class="side">
             <div>4 star</div>
@@ -55,7 +55,7 @@
             </div>
           </div>
           <div class="side right">
-            <div>63</div>
+            <div>{{ rating_list.3 }}</div>
           </div>
           <div class="side">
             <div>3 star</div>
@@ -66,7 +66,7 @@
             </div>
           </div>
           <div class="side right">
-            <div>15</div>
+            <div>{{ rating_list.2 }}</div>
           </div>
           <div class="side">
             <div>2 star</div>
@@ -77,7 +77,7 @@
             </div>
           </div>
           <div class="side right">
-            <div>6</div>
+            <div>{{ rating_list.1 }}</div>
           </div>
           <div class="side">
             <div>1 star</div>
@@ -88,8 +88,17 @@
             </div>
           </div>
           <div class="side right">
-            <div>20</div>
+            <div>{{ rating_list.0 }}</div>
           </div>
         </div>
     </div>
+<style>
+    /* Individual bars */
+.bar-5 {width: {{ rating_list_percent.4 }}%; height: 18px; background-color: #04AA6D;}
+.bar-4 {width: {{ rating_list_percent.3 }}%; height: 18px; background-color: #2196F3;}
+.bar-3 {width: {{ rating_list_percent.2 }}%; height: 18px; background-color: #00bcd4;}
+.bar-2 {width: {{ rating_list_percent.1 }}%; height: 18px; background-color: #ff9800;}
+.bar-1 {width: {{ rating_list_percent.0 }}%; height: 18px; background-color: #f44336;}
+
+</style>
 {% endblock content %}
