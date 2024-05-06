@@ -108,6 +108,7 @@ def book_detail(request, book_id):
                   }
                   )
 
+
 def mybooks(request):
     books = Book.objects.filter(username=request.user)
     for b in books:
@@ -140,13 +141,18 @@ def book_delete(request, book_id):
 def search(request):
         name=request.GET.get('search')
         books = Book.objects.filter(name__icontains=name)
-        for b in books:
-            b.pic_path = b.picture.url[14:]
+        book_ratings = []
+        for book in books:
+            book.pic_path = book.picture.url[14:]
+            ratings = BookRating.objects.filter(book_id=book.id)
+            avg_rating = ratings.aggregate(Avg('rating'))['rating__avg']
+            favorite = Favorite.objects.filter(book_id=book.id, user_id=request.user).first()
+            book_ratings.append((book, avg_rating, favorite))
         return render(request,
                       'bookMng/displaybooks.html',
                       {
                           'item_list': MainMenu.objects.all(),
-                          'book_list': books,
+                          'book_list': book_ratings,
                       }
                       )
 
@@ -245,6 +251,19 @@ def favorite(request):
         else:
             Favorite.objects.create(book_id=book, user_id=user, is_favorite=True)
     return HttpResponseRedirect('/displaybooks')
+
+
+def my_favorites(request):
+    fav_books = Favorite.objects.filter(user_id=request.user, is_favorite=True)
+    for b in fav_books:
+        b.book_id.pic_path = b.book_id.picture.url[14:]
+    return render(request,
+                  "bookMng/my_favorites.html",
+                  {
+                      'item_list': MainMenu.objects.all(),
+                      'book_list': fav_books
+                  }
+                  )
 
 class Register(CreateView):
     template_name = 'registration/register.html'

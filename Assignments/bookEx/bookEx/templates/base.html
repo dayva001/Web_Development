@@ -42,7 +42,7 @@
                         </form>
                     {% else %}
                         {% block login_check %}
-                            Have an account? <a href="{% url 'login' %}?next=/" class="btn btn-link">Login</a>
+                            Have an account? <button href="{% url 'login' %}?next=/" class="btn btn-primary">Login</button>
                         {% endblock login_check %}
                     {% endif %}
                 </span>
