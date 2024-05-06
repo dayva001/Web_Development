@@ -1,12 +1,13 @@
 from django.db.models import Avg
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views.generic import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
-from bookMng.models import MainMenu, Book, BookRating
-from .forms import BookForm, RateBook
+from bookMng.models import MainMenu, Book, BookRating, CartItem, Favorite
+from .forms import BookForm, RateBook, ToggleFavorite
+
 
 # Create your views here.
 
@@ -43,7 +44,8 @@ def displaybooks(request):
         book.pic_path = book.picture.url[14:]
         ratings = BookRating.objects.filter(book_id=book.id)
         avg_rating = ratings.aggregate(Avg('rating'))['rating__avg']
-        book_ratings.append((book, avg_rating))
+        favorite = Favorite.objects.filter(book_id=book.id, user_id=request.user).first()
+        book_ratings.append((book, avg_rating, favorite))
     return render(request,
                   'bookMng/displaybooks.html',
                   {
@@ -185,6 +187,64 @@ def ratebook(request):
                   }
                   )
 
+
+def add_to_cart(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    if request.method == 'POST':
+        quantity = request.POST.get('quantity', 0)
+        cart_item, created = CartItem.objects.get_or_create(book=book, user=request.user)
+        cart_item.quantity += int(quantity)
+        cart_item.save()
+        return HttpResponseRedirect('/cart')
+    return render(request, 'cart', {'book': book})
+
+
+def view_cart(request):
+    cart_items = CartItem.objects.filter(user=request.user)
+    total_price = sum(item.book.price * item.quantity for item in cart_items)
+    for c in cart_items:
+        c.book.pic_path = c.book.picture.url[14:]
+    return render(request, 'bookMng/shopping_cart_summary.html',
+                  {'cart_items': cart_items,
+                   'total_price': total_price,
+                   'item_list': MainMenu.objects.all(),
+                   })
+
+
+def remove_from_cart(request, cart_item_id):
+    cart_item = get_object_or_404(CartItem, id=cart_item_id)
+    if request.method == 'POST':
+        cart_item.quantity -= 1
+        if cart_item.quantity <= 0:
+            cart_item.delete()
+        else:
+            cart_item.save()
+    return HttpResponseRedirect('/cart')
+
+
+def shopping_cart_summary(request):
+    cart_items = CartItem.objects.filter(user=request.user)
+    total_price = sum(item.book.price * item.quantity for item in cart_items)
+    for c in cart_items:
+        c.book.pic_path = c.book.picture.url[14:]
+    return render(request, "shopping_cart_summary.html",
+                  {'cart_item': cart_items,
+                   'total_price': total_price,
+                   'item_list': MainMenu.objects.all(),
+                   })
+
+
+def favorite(request):
+    if request.method == 'POST':
+        book = Book.objects.get(id=request.POST.get('book_id'))
+        user = request.user
+        favorite = Favorite.objects.filter(book_id=book, user_id=user).first()
+        if favorite:
+            favorite.is_favorite = not favorite.is_favorite
+            favorite.save()
+        else:
+            Favorite.objects.create(book_id=book, user_id=user, is_favorite=True)
+    return HttpResponseRedirect('/displaybooks')
 
 class Register(CreateView):
     template_name = 'registration/register.html'

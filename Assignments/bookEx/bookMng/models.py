@@ -32,3 +32,21 @@ class BookRating(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class Favorite(models.Model):
+    book_id = models.ForeignKey(Book, blank=False, null=False, on_delete=models.CASCADE)
+    is_favorite = models.BooleanField(default=False)
+    user_id = models.ForeignKey(User, blank=False, null=False, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id)
+
+class CartItem(models.Model):
+    book = models.ForeignKey('Book', on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.quantity} of {self.book.name}"
+

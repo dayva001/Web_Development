@@ -13,6 +13,8 @@
             <th>Book Name</th>
             <th>Cover</th>
             <th>Rating</th>
+            <th>Favorite</th>
+            <th>Add to Cart</th>
         </tr>
         {% for book in book_list %}
             <tr>
@@ -38,6 +40,25 @@
                             {{ book.1 }}
                         {% endif %}
                         {% csrf_token %}
+                    </form>
+                </td>
+                <td class="text-center">
+                     <form class ='fav-form ' action="favorite" method="post" novalidate>
+                         <input type="hidden" name="book_id" value="{{ book.0.id }}">
+                         <input type="hidden" name="user_id" value="{{ user.id }}">
+                         {% if book.2.is_favorite %}
+                            <button class="btn btn-secondary" type="submit" name="favorite">Remove from Favorites</button>
+                         {% else %}
+                            <button class="btn btn-primary" type="submit" name="favorite">Add to Favorites</button>
+                         {% endif %}
+                         {% csrf_token %}
+                     </form>
+                </td>
+                <td>
+                    <form method="post" action="{% url 'add_to_cart' book.0.id %}">
+                        {% csrf_token %}
+                        <input type="number" name="quantity" value="1" min="1">
+                        <button class="btn btn-large btn-primary" value="{{ request.path }}" type="submit">Add to Cart</button>
                     </form>
                 </td>
             </tr>
