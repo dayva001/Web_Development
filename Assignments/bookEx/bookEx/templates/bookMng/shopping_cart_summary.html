@@ -35,7 +35,7 @@
         <td>{{ item.book.name }}</td>
         <td><img src="{% static item.book.pic_path %}" height="50" width="50"></td>
         <td>{{ item.quantity }}</td>
-        <td>{{ item.book.price }}</td>
+        <td>${{ item.book.price }}</td>
         <td>
           <form method="post" action="{% url 'remove_from_cart' item.id %}">
         {% csrf_token %}
