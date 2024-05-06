@@ -160,4 +160,15 @@
     <MESSAGE value="Test" />
     <option name="LAST_COMMIT_MESSAGE" value="Test" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bookMng/views.py</url>
+          <line>146</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
 </project>
