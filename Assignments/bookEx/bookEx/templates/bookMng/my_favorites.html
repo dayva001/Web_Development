@@ -7,23 +7,27 @@
 
 {% block content %}
     <h1 align="center"> My Favorites</h1>
-    <table class="text-nowrap" border="2" width = "400">
-        <tr>
-            <th>Book Name</th>
-            <th>Cover</th>
-        </tr>
-        {% for b in book_list %}
+    {% if book_list %}
+        <table class="text-nowrap" border="2" width = "400">
             <tr>
-                <td>
-                    <a href="book_detail/{{ b.book_id.id }}">
-                        {{ b.book_id.name }}
-                    </a>
-                </td>
-                <td>
-                    <img src="{% static b.book_id.pic_path %}" height="200">
-                </td>
+                <th>Book Name</th>
+                <th>Cover</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for b in book_list %}
+                <tr>
+                    <td>
+                        <a href="book_detail/{{ b.book_id.id }}">
+                            {{ b.book_id.name }}
+                        </a>
+                    </td>
+                    <td>
+                        <img src="{% static b.book_id.pic_path %}" height="200">
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>You haven't added any books to your favorites yet. <a class="btn btn-secondary font-weight-bold" href="/displaybooks">Favorite a book</a></p>
+    {% endif %}
 {% endblock content %}
 
